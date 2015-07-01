@@ -829,7 +829,7 @@
 { "trigger": "IsSplitScreen", "contents": "IsSplitScreen(${1});" },
 { "trigger": "IsStanceAllowed", "contents": "IsStanceAllowed(${1});" },
 { "trigger": "IsString", "contents": "IsString(${1});" },
-{ "trigger": "IsSubStr", "contents": "IsSubStr(${1});" },
+{ "trigger": "IsSubStr", "contents": "IsSubStr(${1:string},${2:subString})" },
 { "trigger": "issuffix", "contents": "issuffix(${1:msg},${2:suffix});//	common_scripts\\utility.gsc:"},
 { "trigger": "IsSuppressed", "contents": "IsSuppressed(${1});" },
 { "trigger": "IsSuppressionWaiting", "contents": "IsSuppressionWaiting(${1});" },
