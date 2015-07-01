@@ -951,6 +951,7 @@
 { "trigger": "OpenFile", "contents": "OpenFile(${1});" },
 { "trigger": "OpenMenu", "contents": "OpenMenu(${1});" },
 { "trigger": "OpenMenuNoMouse", "contents": "OpenMenuNoMouse(${1});" },
+{ "trigger": "onPlayerConnect\ttwo functions", "contents": "onPlayerConnect(){\n\tfor(;;){\n\t\tlevel waittill( \"connecting\", player );\n\t\tplayer thread onPlayerSpawned();\n\t}\n}\nonPlayerSpawned(){\n\tself endon( \"disconnect\" );\n\tfor(;;){\n\t\tself waittill( \"spawned_player\" );\n\t\t${1:self thread }${2:function}();\n\t\t${3}\n\t}\n}" },
 { "trigger": "OrientMode", "contents": "OrientMode(${1});" },
 { "trigger": "palm_style_door_open", "contents": "palm_style_door_open(${1:soundalias});//	maps\\_utility.gsc:"},
 { "trigger": "pauseEffect", "contents": "pauseEffect(${1});//	maps\\_utility.gsc:"},
