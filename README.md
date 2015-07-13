@@ -9,6 +9,7 @@ Auto-complete tools for using Sublime while scripting CodScript, csc, gsc, menu
 
 
 Thanks to:
+
 Ray - posting original auto completes and languange files
 
 Dukip - Sharing Engine function lists
