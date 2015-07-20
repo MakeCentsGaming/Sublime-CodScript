@@ -650,7 +650,7 @@
 { "trigger": "GetCommandFromKey", "contents": "GetCommandFromKey( ${1:Key} );" },
 { "trigger": "GetCoverNode", "contents": "GetCoverNode( ${1} );" },
 { "trigger": "GetCurrentOffhand", "contents": "GetCurrentOffhand( ${1} )${2:;}" },
-{ "trigger": "GetCurrentWeapon", "contents": "GetCurrentWeapon( ${1:Weapon Name} );" },
+{ "trigger": "GetCurrentWeapon", "contents": "GetCurrentWeapon()" },
 { "trigger": "GetCurrentWeaponClipAmmo", "contents": "GetCurrentWeaponClipAmmo( ${1} )${2:;}" },
 { "trigger": "GetCurve", "contents": "GetCurve( ${1} );" },
 { "trigger": "GetCurveCurpos", "contents": "GetCurveCurpos( ${1} );" },
