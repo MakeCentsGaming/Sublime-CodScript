@@ -812,7 +812,7 @@
 { "trigger": "IsAlive", "contents": "IsAlive( ${1:Entity} );" },
 { "trigger": "IsArray", "contents": "IsArray( ${1:Variable} );" },
 { "trigger": "IsBeingWatched", "contents": "IsBeingWatched( ${1} )" },
-{ "trigger": "IsDefined", "contents": "IsDefined( ${1:Object} );" },
+{ "trigger": "IsDefined", "contents": "IsDefined( ${1:Object} )" },
 { "trigger": "IsDeflected", "contents": "IsDeflected( ${1} )" },
 { "trigger": "IsFiring", "contents": "IsFiring( ${1} )" },
 { "trigger": "IsFiringTurret", "contents": "IsFiringTurret( ${1} )" },
