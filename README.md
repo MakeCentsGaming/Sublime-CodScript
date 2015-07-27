@@ -16,4 +16,6 @@ Dukip - Sharing Engine function lists
 
 n123q45 - menu file and updates to gsc funcitons
 
+Mak - help with updating hints for function vars from zeroy
+
 MakeCents - updates to auto-completions and comment file fix
