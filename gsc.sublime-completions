@@ -298,7 +298,7 @@
 { "trigger": "array_reverse", "contents": "array_reverse( ${1:array} );//maps\\_utility.gsc:"},
 { "trigger": "array_spawn", "contents": "array_spawn( ${1:spawners} );//maps\\_utility.gsc:"},
 { "trigger": "array_swap", "contents": "array_swap( ${1:array},${2:index1},${3:index2} );//maps\\_utility.gsc:"},
-{ "trigger": "array_thread", "contents": "array_thread( ${1:entities},${2:process},${3:var1},${4:var2},${5:var3} );//common_scripts\\utility.gsc:"},
+{ "trigger": "array_thread", "contents": "array_thread( ${1:entities},${2:process}${3:,${4:var1},${5:var2},${6:var3}} );//common_scripts\\utility.gsc:"},
 { "trigger": "array_thread4", "contents": "array_thread4( ${1:entities},${2:process},${3:var1},${4:var2},${5:var3},${6:var4} );//common_scripts\\utility.gsc:"},
 { "trigger": "array_thread5", "contents": "array_thread5( ${1:entities},${2:process},${3:var1},${4:var2},${5:var3},${6:var4},${7:var5} );//common_scripts\\utility.gsc:"},
 { "trigger": "array_validate", "contents": "array_validate( ${1:array} );//maps\\_zombiemode_utility.gsc:"},
