@@ -1595,7 +1595,7 @@
 { "trigger": "WaterSimEnable", "contents": "WaterSimEnable( ${1} );" },
 { "trigger": "WeaponAltWeaponName", "contents": "WeaponAltWeaponName( ${1} );" },
 { "trigger": "WeaponBayonetInfo", "contents": "WeaponBayonetInfo( ${1} );" },
-{ "trigger": "WeaponClass", "contents": "WeaponClass( ${1} );" },
+{ "trigger": "WeaponClass", "contents": "WeaponClass( ${1:weaponName} )" },
 { "trigger": "WeaponClipSize", "contents": "WeaponClipSize( ${1} );" },
 { "trigger": "WeaponFightDist", "contents": "WeaponFightDist( ${1} );" },
 { "trigger": "WeaponFireTime", "contents": "WeaponFireTime( ${1} );" },
