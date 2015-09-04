@@ -14,7 +14,7 @@ Ray - posting original auto completes and languange files
 
 Dukip - Sharing Engine function lists
 
-n123q45 - menu file and updates to gsc funcitons
+n123q45 - menu file and updates to gsc funcitons csc functions
 
 Mak911 - help with updating hints for function vars from zeroy
 
