@@ -7,6 +7,8 @@ Auto-complete tools for using Sublime while scripting CodScript, csc, gsc, menu
 4. Open a gsc, csc, or menu file and select View>Syntax>Open all with current ext as> (Select CodScript>ext)
 6. Do the previous step for each ext.
 
+Changelog:
+  4.07.2016 - fixed formatting issues + added syntax highlight from C++ in menufiles ~Ray1235
 
 Thanks to:
 
