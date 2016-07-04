@@ -22,7 +22,7 @@
 	<key>keyEquivalent</key>
 	<string>^~C</string>
 	<key>name</key>
-	<string>gsc</string>
+	<string>GSC</string>
 	<key>patterns</key>
 	<array>
 		<dict>
