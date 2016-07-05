@@ -2,213 +2,216 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>comment</key>
+	<string>CoD Menu</string>
 	<key>fileTypes</key>
 	<array>
 		<string>menu</string>
 	</array>
-	<!--
-		if you know what to use to match codscripts, do it!
-	key>firstLineMatch</key>
-	<string>-\*- C\+\+ -\*-</string-->
-	<!-- random gibberish to me-->
+	<key>firstLineMatch</key>
+	<string>-\*- C\+\+ -\*-</string>
 	<key>foldingStartMarker</key>
 	<string>(?x)
 		 /\*\*(?!\*)
 		|^(?![^{]*?//|[^{]*?/\*(?!.*?\*/.*?\{)).*?\{\s*($|//|/\*(?!.*?\*/.*\S))
 	</string>
-	<!-- what's this? -->
 	<key>foldingStopMarker</key>
 	<string>(?&lt;!\*)\*\*/|^\s*\}</string>
 	<key>keyEquivalent</key>
 	<string>^~C</string>
 	<key>name</key>
-	<string>menu</string>
+	<string>Menufile</string>
 	<key>patterns</key>
 	<array>
 		<dict>
 			<key>include</key>
-			<string>#comments</string>
+			<string>#special_block</string>
 		</dict>
-		<!-- keywords -->
+		<dict>
+			<key>include</key>
+			<string>source.c</string>
+		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(break(point)?|case|continue|default|else|for|if|return|switch|thread|waittillframeend|while|wait|game|level|self|endon|waittill)\b</string>
+			<string>\b(friend|explicit|virtual)\b</string>
 			<key>name</key>
-			<string>keyword.control.c</string>
+			<string>storage.modifier.c++</string>
 		</dict>
-		<!--/keywords-->
-		<!--constants-->
 		<dict>
 			<key>match</key>
-			<string>\b(true|false|undefined)\b</string>
+			<string>\b(private:|protected:|public:)</string>
 			<key>name</key>
-			<string>constant.language.c</string>
+			<string>storage.modifier.c++</string>
 		</dict>
-		<!--/constants-->
-		<!--numbers-->
 		<dict>
 			<key>match</key>
-			<string>(?:\b|\.)[0-9]+\b</string>
+			<string>\b(catch|operator|try|throw|using)\b</string>
 			<key>name</key>
-			<string>constant.numeric.c</string>
+			<string>keyword.control.c++</string>
 		</dict>
-		<!--/numbers-->
-		<!--operators-->
 		<dict>
 			<key>match</key>
-			<string>!|%|&amp;|\*|\-\-|\-|\+\+|\+|==|=|!=|&lt;=|&gt;=|&lt;|&gt;|&amp;&amp;|\|\||\||\*=|/=|%=|\+=|\-=|&amp;=|\^=|\|=|\^|/|&gt;&gt;|&lt;&lt;|&lt;&lt;=|&gt;&gt;=|~</string>
+			<string>\bdelete\b(\s*\[\])?|\bnew\b(?!])</string>
 			<key>name</key>
-			<string>keyword.operator.menu</string>
+			<string>keyword.control.c++</string>
 		</dict>
-		<!--/operators-->
-		<!-- strings -->
+		<dict>
+			<key>comment</key>
+			<string>common C++ instance var naming idiom -- fMemberName</string>
+			<key>match</key>
+			<string>\b(f|m)[A-Z]\w*\b</string>
+			<key>name</key>
+			<string>variable.other.readwrite.member.c++</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\bthis\b</string>
+			<key>name</key>
+			<string>variable.language.c++</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\bnullptr\b</string>
+			<key>name</key>
+			<string>constant.language.c++</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\btemplate\b\s*</string>
+			<key>name</key>
+			<string>storage.type.template.c++</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(const_cast|dynamic_cast|reinterpret_cast|static_cast)\b\s*</string>
+			<key>name</key>
+			<string>keyword.operator.cast.c++</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(and|and_eq|bitand|bitor|compl|not|not_eq|or|or_eq|typeid|xor|xor_eq)\b</string>
+			<key>name</key>
+			<string>keyword.operator.c++</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(class|wchar_t|nullptr_t)\b</string>
+			<key>name</key>
+			<string>storage.type.c++</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(export|mutable|typename)\b</string>
+			<key>name</key>
+			<string>storage.modifier.c++</string>
+		</dict>
 		<dict>
 			<key>begin</key>
-			<string>"</string>
+			<string>(?x)
+    				(?:  ^                                 # begin-of-line
+    				  |  (?: (?&lt;!else|new|=) )             #  or word + space before name
+    				)
+    				((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*) # actual name
+    				 \s*(\()                           # start bracket or end-of-line
+    			</string>
 			<key>beginCaptures</key>
 			<dict>
-				<key>0</key>
+				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.string.begin.c</string>
+					<string>entity.name.function.c++</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.c</string>
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>"</string>
+			<string>\)</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>0</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.string.end.c</string>
+					<string>punctuation.definition.parameters.c</string>
 				</dict>
 			</dict>
 			<key>name</key>
-			<string>string.quoted.double.c</string>
+			<string>meta.function.destructor.c++</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>patterns</key>
-					<array>
-						<!-- string placeholder -->
-						<dict>
-							<key>match</key>
-							<string>&amp;&amp;[1-9]</string>
-							<key>name</key>
-							<string>constant.other.placeholder.c</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>&amp;&amp;0</string>
-							<key>name</key>
-							<string>invalid.illegal.placeholder.c</string>
-						</dict>
-						<!--/string placeholder-->
-						<!--colors-->
-						<dict>
-							<key>match</key>
-							<string>\^\d</string>
-							<key>name</key>
-							<string>constant.other.colors.menu</string>
-						</dict>
-						<!--/colors-->
-						<!-- escape character -->
-						<dict>
-							<key>match</key>
-							<string>\\(\\|[abefnprtv'"?]|[0-3]\d{,2}|[4-7]\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})</string>
-							<key>name</key>
-							<string>constant.character.escape.c</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\\.</string>
-							<key>name</key>
-							<string>invalid.illegal.unknown-escape.c</string>
-						</dict>
-						<!-- /escape character -->
-					</array>
+					<key>include</key>
+					<string>$base</string>
 				</dict>
 			</array>
 		</dict>
-		<!-- /strings -->
-		<!-- #include -->
-
-		<dict>
-			<key>begin</key>
-			<string>^\s*#\s*(include)\s*</string>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.import.include.c</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>;</string>
-			<key>name</key>
-			<string>meta.preprocessor.c.include</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>match</key>
-					<string>[A-z0-9_]</string>
-					<key>name</key>
-					<string>string.kfc</string>
-				</dict>
-			</array>
-		</dict>
-		<!-- /#include -->
-		<!--Function-->
 		<dict>
 			<key>begin</key>
 			<string>(?x)
-		^(?:\s*) (?!(?:return|undefined|break|breakpoint|continue|case|default|true|false|endon|else|if|for|switch|thread|wait|waittillframeend|while|self|level|game|waittill)\s*\()
-    		(
-    			(?: (?!\d|\[)[A-z0-9_]*+) # actual name
-    		)
-    		 \s*(?=\()</string>
+    				(?:  ^                                 # begin-of-line
+    				  |  (?: (?&lt;!else|new|=) )             #  or word + space before name
+    				)
+    				((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*) # actual name
+    				 \s*(\()                           # terminating semi-colon
+    			</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.function.c</string>
+					<string>entity.name.function.c++</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.c</string>
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\})|(?=#)|(;)</string><!--todo: what is it?-->
+			<string>\)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.c</string>
+				</dict>
+			</dict>
 			<key>name</key>
-			<string>meta.function.c</string>
+			<string>meta.function.destructor.prototype.c++</string>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#comments</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#parens</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#block</string>
+					<string>$base</string>
 				</dict>
 			</array>
 		</dict>
-		<!--/Function-->
 	</array>
 	<key>repository</key>
 	<dict>
-		<!--dot -->
-		<key>access</key>
+		<key>angle_brackets</key>
 		<dict>
-			<key>match</key>
-			<string>\.[a-zA-Z_][a-zA-Z_0-9]*\b(?!\s*\()</string>
+			<key>begin</key>
+			<string>&lt;</string>
+			<key>end</key>
+			<string>&gt;</string>
 			<key>name</key>
-			<string>variable.other.dot-access.c</string>
+			<string>meta.angle-brackets.c++</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#angle_brackets</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>$base</string>
+				</dict>
+			</array>
 		</dict>
-		<!--dot-->
 		<key>block</key>
 		<dict>
 			<key>begin</key>
@@ -216,78 +219,16 @@
 			<key>end</key>
 			<string>\}</string>
 			<key>name</key>
-			<string>meta.block.c</string>
+			<string>meta.block.c++</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>include</key>
-					<string>#block_innards</string>
-				</dict>
-			</array>
-		</dict>
-		<key>block_innards</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#access</string>
-				</dict>
-				<dict>
 					<key>captures</key>
 					<dict>
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.whitespace.support.function.leading.c</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>support.function.cod4.c</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(?i)(\s*)\b(ACos|ASin|ATan|AddAIEventListener|AddNodeToCurve|AddTestClient|AddVehicleToCompass|AdsButtonPressed|AimAtPos|AllClientsPrint|AllowADS|AllowCrouch|AllowJump|AllowLean|AllowMelee|AllowProne|AllowSpectateTeam|AllowSprint|AllowStand|AllowedStances|AmbientPlay|AmbientStop|Amplify|AmplifyStop|AnglesToForward|AnglesToRight|AnglesToUp|AnimCustom|AnimHasNotetrack|AnimMode|AnimRelative|AnimScripted|Announcement|AnyAmmoForWeaponModes|Assert|AssertEx|AssertMsg|Attach|AttachPath|AttackButtonPressed|BadPlace_Arc|BadPlace_Brush|BadPlace_Cylinder|BadPlace_Delete|Ban|Battlemap_AddMarker|Battlemap_RemoveMarker|BeginLocationSelection|BeginPrediction|BloodImpact|BoundsWouldTelefrag|BreakRope|BuildCurve|BulletSpread|BulletTrace|BulletTracePassed|BulletTracer|ButtonPressed|CameraLinkToCurve|CanAttackEnemyNode|CanSee|CanShoot|CanSpawnTurret|CanUseTurret|ChangeFontScaleOverTime|ChangeLevel|CheckCoverExitPosWithPath|CheckGrenadeLaunch|CheckGrenadeLaunchPos|CheckGrenadeThrow|CheckGrenadeThrowPos|CheckProne|Cinematic|CinematicInGame|CinematicInGameLoop|CinematicInGameLoopFromFastfile|CinematicInGameLoopResident|CinematicInGameSync|ClearAllCorpses|ClearAllTextAfterHudelem|ClearAnim|ClearEnemy|ClearEntityTarget|ClearFixedNodeSafeVolume|ClearGoalVolume|ClearGoalYaw|ClearGunnerTarget|ClearLocalizedStrings|ClearLookAtEnt|ClearPerks|ClearPitchOrient|ClearPotentialThreat|ClearTargetEnt|ClearTargetEntity|ClearTargetYaw|ClearTurretTarget|ClientAnnouncement|ClientClaimTrigger|ClientPrint|ClientReleaseTrigger|ClientSysRegister|ClientSysSetState|ClonePlayer|CloseFile|CloseInGameMenu|CloseMenu|Closer|CombineAngles|CommitSave|ConnectPaths|Cos|CreatePrintChannel|CreateRope|CreateThreatBiasGroup|DamageConeTrace|DeactivateChannelVolumes|DeactivateEq|DeactivateReverb|Delete|DeleteFX|DeleteFakeEnt|DeleteRope|DepthInWater|Destroy|Detach|DetachAll|Detonate|DevAddPitch|DevAddRoll|DevAddYaw|DisableAimAssist|DisableGrenadeTouchDamage|DisableInvulnerability|DisableOffhandWeapons|DisableTurretDismount|DisableWeaponCycling|DisableWeapons|DisconnectPaths|Distance|Distance2D|DistanceSquared|DoDamage|DoSpawn|DontInterpolate|DrawCompassFriendlies|DrawCurve|DropItem|DropWeapon|DumpAnims|DumpHistory|EQOff|EQOn|Earthquake|EnableAimAssist|EnableGrenadeTouchDamage|EnableHealthShield|EnableInvulnerability|EnableLinkTo|EnableOffhandWeapons|EnableTurretDismount|EnableWeaponCycling|EnableWeapons|EndLocationSelection|EndPrediction|EnterProne|EntityRadiusDamage|ExitLevel|ExitProne|FGetArg|FPrintFields|FPrintLn|FReadLn|FadeOverTime|FindAnimByname|FindBestCoverNode|FindCoverNode|FindReacquireDirectPath|FindReacquireNode|FindReacquireProximatePath|FinishPlayerDamage|FireGrenadeLauncher|FireWeapon|FlagEnemyUnattackable|ForceTeleport|ForceViewmodelAnimation|FragButtonPressed|FreeCurve|FreeVehicle|FreezeControls|GetAIArray|GetAISpeciesArray|GetAITriggerFlags|GetAllNodes|GetAllVehicleNodes|GetAmmoCount|GetAngleDelta|GetAnglesToLikelyEnemyPath|GetAnimAssetType|GetAnimCurrFrameCount|GetAnimFrameCount|GetAnimLength|GetAnimTime|GetArrayKeys|GetAssignedTeam|GetAtrLoaded|GetAttachIgnoreCollision|GetAttachModelName|GetAttachPos|GetAttachSize|GetAttachTagName|GetBrushModelCenter|GetCentroid|GetClanID|GetClanName|GetClosestEnemySqDist|GetCommandFromKey|GetCoverNode|GetCurrentOffhand|GetCurrentWeapon|GetCurrentWeaponClipAmmo|GetCurve|GetCurveCurpos|GetCurveServerpos|GetCycleOriginOffset|GetDate|GetDebugDvar|GetDebugDvarFloat|GetDebugDvarInt|GetDebugEye|GetDiffuculty|GetDvar|GetDvarFloat|GetDvarInt|GetEnemySqDist|GetEngineVolume|GetEnt|GetEntArray|GetEntByNum|GetEntNum|GetEntityNumber|GetEye|GetFXVisibility|GetFixedNodeSafeVolume|GetFlashBangedStrength|GetFractionMaxAmmo|GetFractionStartAmmo|GetGoalSpeedMPH|GetGoalVolume|GetGroundEntType|GetHitEntType|GetHitYaw|GetKeyBinding|GetLightColor|GetLightExponent|GetLightFovInner|GetLightFovOuter|GetLightIntensity|GetLightRadius|GetMapSunDirection|GetMapSunLight|GetMotionAngle|GetMoveDelta|GetNegotiationEndNode|GetNegotiationStartNode|GetNode|GetNodeArray|GetNormalHealth|GetNormalizedMovement|GetNorthYaw|GetNotetrackTimes|GetNumConnectedPlayers|GetNumExpectedPlayers|GetNumParts|GetNumVehicles|GetOffhandSecondaryClass|GetOrigin|GetPartName|GetPlayerAngles|GetPlayerViewHeight|GetReacquireNode|GetReflectionLocs|GetRope|GetShootAtPos|GetSnapshotIndexArray|GetSpawnerArray|GetSpawnerTeamArray|GetSpeed|GetSpeedMPH|GetStance|GetStartAngles|GetStartOrigin|GetStartTime|GetStat|GetSubStr|GetTagAngles|GetTagOrigin|GetTeamPlayersAlive|GetTeamRadar|GetTeamScore|GetThreatBias|GetThreatBiasGroup|GetTime|GetTimeScale|GetTurret|GetTurretOwner|GetTurretTarget|GetVehOccupants|GetVehicleNode|GetVehicleNodeArray|GetVehicleOwner|GetVelocity|GetViewModel|GetWaterHeight|GetWeaponAmmoClip|GetWeaponAmmoStock|GetWeaponClipModel|GetWeaponModel|GetWeaponsList|GetWeaponsListPrimaries|GetWheelSurface|GiveAchievement|GiveBackWeaponForLaststand|GiveMaxAmmo|GiveStartAmmo|GiveWeapon|HasCollectible|HasEQ|HasPerk|HasWeapon|Hide|HidePart|HideViewModel|HideWeaponsForLaststand|IPrintLn|IPrintLnBold|Int|IsAI|IsAlive|IsArray|IsBeingWatched|IsDefined|IsDeflected|IsFiring|IsFiringTurret|IsGodMode|IsInGoal|IsKnownEnemyInRadius|IsKnownEnemyInVolume|IsLookingAt|IsMantling|IsMeleeing|IsMoveSuppressed|IsNodeOccupied|IsOnGround|IsOnLadder|IsPathDirect|IsPlayer|IsPlayerNumber|IsRagdoll|IsSaveRecentlyLoaded|IsSaveSuccessful|IsSentient|IsSplitScreen|IsStanceAllowed|IsString|IsSubStr|IsSuppressed|IsSuppressionWaiting|IsTalking|IsThrowingGrenade|IsTouching|IsTurretActive|IsTurretFiring|IsTurretReady|IsValidGametype|IsVehicleUsable|IsWaitingOnSound|IsWeaponClipOnly|IsWeaponDetonationtimed|ItemWeaponSetAmmo|JoltBody|Kick|Knockback|LaserOff|LaserOn|Launch|Length|LengthSquared|LerpPosition|LerpSunDirection|Line|LinkTo|LoadFX|LoadedFX|LocalToWorldCoords|LockLightVis|LogPrint|LogString|MagicBullet|MagicGrenade|MagicGrenadeManual|MagicGrenadeType|MakeDvarServerInfo|MakeFakeAI|MakeTurretUnusable|MakeTurretUsable|MakeVehicleUnusable|MakeVehicleUsable|Map|MapExists|Map_Restart|MayMoveFromPointToPoint|MayMoveToPoint|Melee|MeleeButtonPressed|Missile_CreateAttractorEnt|Missile_CreateAttractorOrigin|Missile_CreateRepulsorEnt|Missile_CreateRepulsorOrigin|Missile_DeleteAttractor|Missile_SetTarget|MissionFailed|MissionSuccess|MoveGravity|MoveOverTime|MoveTo|MoveX|MoveY|MoveZ|MusicPlay|MusicStop|NearNode|NetUpdate|NewClientHudElem|NewHudElem|NewSquadHUDElem|NewTeamHudElem|NightVisionForceOff|NotSolid|NotifyOnCommand|Obituary|Obituary_Squad|Objective_Add|Objective_AdditionalCurrent|Objective_AdditionalPosition|Objective_Current|Objective_Delete|Objective_Icon|Objective_OnEntity|Objective_Position|Objective_Ring|Objective_Squad|Objective_State|Objective_String|Objective_String_NoMessage|Objective_Team|OkToSpawn|OpenFile|OpenMenu|OpenMenuNoMouse|OrientMode|PhysicsExplosionCylinder|PhysicsExplosionSphere|PhysicsJitter|PhysicsJolt|PhysicsLaunch|PhysicsTrace|PickUpGrenade|PingPlayer|PlaceSpawnPoint|PlayFX|PlayFXOnTag|PlayLocalSound|PlayLoopSound|PlayLoopedFX|PlayRumbleLoopOnEntity|PlayRumbleLoopOnPosition|PlayRumbleOnEntity|PlayRumbleOnPosition|PlaySound|PlaySoundAsMaster|PlaySoundAtPosition|PlaySoundToPlayer|PlaySoundToTeam|PlayerADS|PlayerLinkTo|PlayerLinkToAbsolute|PlayerLinkToCamera|PlayerLinkToDelta|PlayerPhysicsTrace|PlayerPositionValid|PlayerSetGroundReferenceEnt|Player_SetOffscreenDownMaterial|Player_SetOffscreenMaterial|Playercmd_GetCurrentArcadeHighscore|PointOnSegmentNearestToPoint|PositionWouldTelefrag|PrecacheHeadIcon|PrecacheItem|PrecacheLocationSelector|PrecacheModel|PrecacheRumble|PrecacheShader|PrecacheShellShock|PrecacheStatusIcon|PrecacheString|PrecacheTurret|PrecacheMenu|PrecacheSpawn|PrecacheVehicle|PredictAnims|PredictOriginAndAngles|Print|Print3d|PrintLn|PushPlayer|RadiusDamage|RandomFloat|RandomFloatRange|RandomInt|RandomIntRange|ReacquireMove|ReacquireStep|RefreshHUDAmmoCounter|RefreshHUDCompass|ReleaseClaimedTrigger|RemoveAIEventListener|RemoveVehicleFromCompass|Reset|ResetCurve|ResetSpreadOverride|ResetSunDirection|ResetSunLight|ResetTimeout|RestoreDefaultDropPitch|ResumeSpeed|ReturnPlayerControl|ReviveEffect|RevivePlayer|RotatePitch|RotateRoll|RotateTo|RotateVelocity|RotateYaw|SaveGame|SaveGameNoCommit|SayAll|SayTeam|ScaleOverTime|SecondaryOffhandButtonPressed|SendLeaderBoards|SendRanks|SetAISpread|SetAcceleration|SetActionSlot|SetAimAnims|SetAirResistance|SetAnim|SetAnimKnob|SetAnimKnobAll|SetAnimKnobAllLimited|SetAnimKnobAllLimitedRestart|SetAnimKnobAllRestart|SetAnimKnobLimited|SetAnimKnobLimitedRestart|SetAnimKnobRestart|SetAnimLimited|SetAnimLimitedRestart|SetAnimRestart|SetAnimState|SetAnimTime|SetArchive|SetAutoPickup|SetBlur|SetBottomArc|SetBurn|SetCanDamage|SetChannelVolumes|SetClientDvar|SetClientDvars|SetClientNameMode|SetClock|SetClockUp|SetCollectible|SetContents|SetConvergenceTime|SetCullDist|SetCursorHint|SetCurveCameraEnt|SetCurveNotifyEnt|SetCurveRounded|SetCurveSmooth|SetCurveSpeed|SetDebugAngles|SetDebugOrigin|SetDeceleration|SetDefaultDropPitch|SetDepthOfField|SetDvar|SetEngagementMaxDist|SetEngagementMinDist|SetEngineVolume|SetEntityTarget|SetEq|SetEqLerp|SetExpFog|SetFakeEntOrg|SetFixedNodeSafeVolume|SetFlaggedAnim|SetFlaggedAnimKnob|SetFlaggedAnimKnobAll|SetFlaggedAnimKnobAllRestart|SetFlaggedAnimKnobLimited|SetFlaggedAnimKnobLimitedRestart|SetFlaggedAnimKnobRestart|SetFlaggedAnimLimited|SetFlaggedAnimLimitedRestart|SetFlaggedAnimRestart|SetFlashBanged|SetFlashbangImmunity|SetFriendlyChain|SetGameEndTime|SetGameTypeString|SetGoalEntity|SetGoalNode|SetGoalPos|SetGoalVolume|SetGoalYaw|SetGunnerTargetEnt|SetGunnerTargetVec|SetHintString|SetHoverParams|SetIgnoreMeGroup|SetJitterParams|SetLeftArc|SetLightColor|SetLightExponent|SetLightFovRange|SetLightIntensity|SetLightRadius|SetLookAt|SetLookAtAnimNodes|SetLookAtCurve|SetLookAtDirection|SetLookAtEnt|SetLookAtEntity|SetLookAtOrigin|SetLookAtText|SetLookAtYawLimits|SetMapCenter|SetMapNameString|SetMaxPitchRoll|SetMiniMap|SetMissionDvar|SetMode|SetModel|SetMoveSpeedScale|SetNearGoalNotifyDist|SetNodePriority|SetNormalHealth|SetOffhandSecondaryClass|SetOrigin|SetPerk|SetPhysicsGravityDir|SetPlaneGoalRoll|SetPlanegoalPos|SetPlayerAngles|SetPlayerIgnoreRadiusDamage|SetPlayerNameString|SetPlayerSpread|SetPlayerTeamRank|SetPotentialThreat|SetPrintChannel|SetProneAnimNodes|SetPulseFX|SetRank|SetReverb|SetRightArc|SetRunToPos|SetSavedDvar|SetShader|SetShadowHint|SetSoundBlend|SetSpawnWeapon|SetSpawnerTeam|SetSpeed|SetSpeedImmediate|SetSpreadOverride|SetStableMissile|SetStance|SetStat|SetSunDirection|SetSunLight|SetSuppressionTime|SetSwitchNode|SetTalkToSpecies|SetTargetEnt|SetTargetEntity|SetTargetYaw|SetTeamForTrigger|SetTeamRadar|SetTeamScore|SetTenthsTimer|SetTenthsTimerUp|SetText|SetThreatBias|SetThreatBiasAgainstAll|SetThreatBiasGroup|SetTimeScale|SetTimer|SetTimerUp|SetTopArc|SetTurningAbility|SetTurretAnim|SetTurretIgnoreGoals|SetTurretNode|SetTurretTargetEnt|SetTurretTargetVec|SetTurretTeam|SetUINextLevel|SetValue|SetVehGoalPos|SetVehMaxSpeed|SetVehWeapon|SetVehicleLookAtText|SetVehicleTeam|SetVelocity|SetViewModel|SetViewmodelDepthOfField|SetVisibleToSquad|SetVisibletoPlayer|SetVolFog|SetVoteNoCount|SetVoteString|SetVoteTime|SetVoteYesCount|SetWaitNode|SetWaitSpeed|SetWayPoint|SetWeaponAmmoClip|SetWeaponAmmoStock|SetWinningPlayer|SetWinningTeam|SetYawSpeed|ShellShock|Shoot|ShootBlank|ShootTurret|Show|ShowAllParts|ShowPart|ShowScoreBoard|ShowToPlayer|ShowViewModel|SightConeTrace|SightTracePassed|Sin|SnapshotsAcknowledged|Solid|SoundExists|SoundFade|Spawn|SpawnActor|SpawnFakeEnt|SpawnFx|SpawnStruct|SpawnTurret|SpawnVehicle|SplitArgs|SplitViewAllowed|StalingradSpawn|StartCameraTween|StartCoverArrival|StartEngineSound|StartFiring|StartIgnoringSpotLight|StartPath|StartRagdoll|StartScriptedAnim|StartTanning|StartTraverseArrival|StartWaterSheetFX|StopAllRumbles|StopAnimScripted|StopCinematicInGame|StopCurve|StopEngineSound|StopFireWeapon|StopFiring|StopIgnoringSpotLight|StopLocalSound|StopLookAt|StopLoopSound|StopRumble|StopShellShock|StopShoot|StopSounds|StopUseAnimTree|StopUseTurret|StopWatersheetFX|StrTok|Suicide|SwitchToOffhand|SwitchToWeapon|SyncSystemStates|TableLookup|TableLookupiStringTakeAllWeapons|TakeWeapon|Tan|Target_ClearReticleLockOn|Target_GetArray|Target_IsInCircle|Target_IsInRect|Target_IsTarget|Target_Remove|Target_Set|Target_SetAttackMode|Target_SetJavelinOnly|Target_SetOffscreenShader|Target_SetShader|Target_StartReticleLockOn|Teleport|ThreatBiasGroupExists|ThrowDownWeapon|ThrowGrenade|TimedRadiusDamage|ToLower|ToggleIK|TrackScriptState|TraverseMode|TriggerFX|TrimPathtoAttack|TurretFireDisable|TurretFireEnable|UnSetPerk|UnSetTurretNode|UnLink|UnlockLightVis|UpdateClientNames|UpdateDMScores|UpdateGamerProfile|UpdatePlayerSightAccuracy|UpdateProne|UpdateScores|UploadScore|UploadTime|UseAnimTree|UseButtonPressed|UseBy|UseCoverNode|UseReacquireNode|UseTriggerRequireLookAt|UseTurret|UseVehicle|VectorCross|VectorDot|VectorFromLineToPoint|VectorLerp|VectorNormalize|VectorToAngles|VehForceMaterialSpeed|VehGetModel|Vibrate|ViewKick|VisionSetNaked|VisionSetNight|WaterPlop|WaterSimEnable|WeaponAltWeaponName|WeaponBayonetInfo|WeaponClass|WeaponClipSize|WeaponFightDist|WeaponFireTime|WeaponHasBayonet|WeaponInventoryType|WeaponIsBoltAction|WeaponIsGasWeapon|WeaponIsSemiAuto|WeaponLockFinalize|WeaponLockFree|WeaponLockNoClearance|WeaponLockStart|WeaponLockTargetTooClose|WeaponMaxAmmo|WeaponMaxDist|WeaponStartAmmo|WeaponType|WithinApproxPathDist|WorldEntNumber)(?=\s*\()</string>
-				</dict>
-				<!-- custom functions -->
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.whitespace.function-call.leading.c</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>variable.other.c</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.parameters.c</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(?x) (?: (?= \s )  (?:(?&lt;=else|return) | (?&lt;!\w)) (\s+))?
-			(\b
-				(?!(while|for|if|else|switch|return|wait|waittill|endon)\s*\()(?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\b | :: )++                  # actual name
-			)
-			 \s*(\()</string>
-					<key>name</key>
-					<string>meta.function-call.c</string>
-				</dict>
-				<!-- /custom functions -->
-				<!-- different functions -->
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>variable.other.c</string>
+							<string>support.function.any-method.c</string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -297,23 +238,12 @@
 					</dict>
 					<key>match</key>
 					<string>(?x)
-			        (?x)
-			(?:
-			     (?: (?= \s )           (?&lt;!else|return) (?&lt;=\w)\s+      #  or word + space before name
-			     )
-			)
-			(
-				(?: [A-Za-z_][A-Za-z0-9_]*+ | :: )++    |              # actual name
-				(?: (?&lt;=operator) (?: [-*&amp;&lt;&gt;=+!]+ | \(\) | \[\] ) )?  # if it is a C++ operator
-			)
-			 \s*(\()</string>
+    				(
+    					(?!while|for|do|if|else|switch|catch|enumerate|return|r?iterate)(?: \b[A-Za-z_][A-Za-z0-9_]*+\b | :: )*+                  # actual name
+    				)
+    				 \s*(\()</string>
 					<key>name</key>
-					<string>meta.initialization.c</string>
-				</dict>
-				<!-- /different functions -->
-				<dict>
-					<key>include</key>
-					<string>#block</string>
+					<string>meta.function-call.c</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -321,74 +251,285 @@
 				</dict>
 			</array>
 		</dict>
-		<!--comments-->
-		<key>comments</key>
+		<key>constructor</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>/\*</string>
-					<key>captures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.c</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\*/</string>
-					<key>name</key>
-					<string>comment.block.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\*/.*\n</string>
-					<key>name</key>
-					<string>invalid.illegal.stray-comment-end.c</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>//</string>
+					<string>(?x)
+    				(?:  ^\s*)                             # begin-of-line
+    				((?!while|for|do|if|else|switch|catch|enumerate|r?iterate)[A-Za-z_][A-Za-z0-9_:]*) # actual name
+    				 \s*(\()                            # start bracket or end-of-line
+    			</string>
 					<key>beginCaptures</key>
 					<dict>
-						<key>0</key>
+						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.comment.c</string>
+							<string>entity.name.function.c++</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.parameters.c</string>
 						</dict>
 					</dict>
 					<key>end</key>
-					<string>$\n?</string>
+					<string>\)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.parameters.c</string>
+						</dict>
+					</dict>
 					<key>name</key>
-					<string>comment.line.double-slash.c++</string>
+					<string>meta.function.constructor.c++</string>
 					<key>patterns</key>
 					<array>
 						<dict>
-							<key>match</key>
-							<string>(?&gt;\\\s*\n)</string>
+							<key>include</key>
+							<string>$base</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(?x)
+    				(:)                            # begin-of-line
+    				((?=\s*[A-Za-z_][A-Za-z0-9_:]* # actual name
+    				 \s*(\()))                      # start bracket or end-of-line
+    			</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
 							<key>name</key>
-							<string>punctuation.separator.continuation.c++</string>
+							<string>punctuation.definition.parameters.c</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?=\{)</string>
+					<key>name</key>
+					<string>meta.function.constructor.initializer-list.c++</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>$base</string>
 						</dict>
 					</array>
 				</dict>
 			</array>
 		</dict>
-		<!--/comments-->
-		<key>parens</key>
+		<key>special_block</key>
 		<dict>
-			<key>begin</key>
-			<string>\(</string>
-			<key>end</key>
-			<string>\)</string>
-			<key>name</key>
-			<string>meta.parens.c</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>include</key>
-					<string>$base</string>
+					<key>begin</key>
+					<string>\b(namespace)\s+([A-Za-z_][_A-Za-z0-9:]*\b)?+(?!\s*?(;|=|,))</string>
+					<key>end</key>
+					<string>(?&lt;=\})</string>
+					<key>name</key>
+					<string>meta.namespace-block.c++</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.c++</string>
+						</dict>
+					</dict>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>begin</key>
+							<string>\{</string>
+							<key>end</key>
+							<string>\}</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#special_block</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#constructor</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>$base</string>
+								</dict>
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(class|struct)\s+([_A-Za-z][_A-Za-z0-9]*\b);</string>
+					<key>name</key>
+					<string>meta.class-struct-block.c++</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.c++</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.forward-decl.c++</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>\b(class|struct)\s+([_A-Za-z][_A-Za-z0-9]*\b)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.c++</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.c++</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?&lt;=\})|(?=(;|,|\(|\)|&gt;|\[|\]))</string>
+					<key>name</key>
+					<string>meta.class-struct-block.c++</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#angle_brackets</string>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>(?&lt;!:):(?!:)</string>
+							<key>end</key>
+							<string>(?=\{)</string>
+							<key>name</key>
+							<string>meta.class-struct-block.base-classes.c++</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>match</key>
+									<string>\b(private|protected|public|virtual)</string>
+									<key>name</key>
+									<string>storage.modifier.c++</string>
+								</dict>
+								<dict>
+									<key>begin</key>
+									<string>[_A-Za-z][_A-Za-z0-9]*\b</string>
+									<key>end</key>
+									<string>,|(?=\{)</string>
+									<key>patterns</key>
+									<array>
+										<dict>
+											<key>include</key>
+											<string>#angle_brackets</string>
+										</dict>
+									</array>
+								</dict>
+							</array>
+						</dict>
+						<dict>
+							<key>begin</key>
+							<string>(\{)</string>
+							<key>beginCaptures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.definition.scope.c++</string>
+								</dict>
+							</dict>
+							<key>end</key>
+							<string>(\})(\s*\n)?</string>
+							<key>endCaptures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.definition.invalid.c++</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>invalid.illegal.you-forgot-semicolon.c++</string>
+								</dict>
+							</dict>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#special_block</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>#constructor</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>$base</string>
+								</dict>
+							</array>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>$base</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>\b(extern)(?=\s*")</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.modifier.c++</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>(?&lt;=\})|(?=\w)</string>
+					<key>name</key>
+					<string>meta.extern-block.c++</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>begin</key>
+							<string>\{</string>
+							<key>end</key>
+							<string>\}</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>include</key>
+									<string>#special_block</string>
+								</dict>
+								<dict>
+									<key>include</key>
+									<string>$base</string>
+								</dict>
+							</array>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>$base</string>
+						</dict>
+					</array>
 				</dict>
 			</array>
 		</dict>
@@ -396,6 +537,6 @@
 	<key>scopeName</key>
 	<string>source.menu</string>
 	<key>uuid</key>
-	<string>HOW TO GET A NEW ONE?</string>
+	<string>insert random uuid</string>
 </dict>
 </plist>
